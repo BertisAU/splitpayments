@@ -50,11 +50,11 @@ async def on_invoice_paid(payment: Payment) -> None:
 
             amount_msat = int(payment.amount * target.percent / 100)
             memo = (
-                f"Split payment: {target.percent}% for {target.alias or target.wallet}"
+                f"GreenBit payment for {target.alias or target.wallet}"
             )
 
             if target.wallet.find("@") >= 0 or target.wallet.find("LNURL") >= 0:
-                safe_amount_msat = amount_msat - fee_reserve(amount_msat)
+                safe_amount_msat = amount_msat
                 payment_request = await get_lnurl_invoice(
                     target.wallet, payment.wallet_id, safe_amount_msat, memo
                 )
